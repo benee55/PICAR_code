@@ -46,11 +46,15 @@ Before running any code, make sure the required R packages and programming envir
   + Ordinal Data: `/samples/Ordinal_Morans.RData`
 - See code for modifications for ordinal data. 
 
-### Step Four: 
+### Step Four - PICAR-based Model Fitting via MCMC:
+
+#### Implementation A - nimble:
+
+#### Implementation B - stan:
 
 - Adds all functions from the script, `functions.R`, found in the `./src/` folder.
 
-### Step Five: 
+### Step Four - PICAR-based Model Fitting via MCMC: 
 
 - Loads the raw coal-fired power plant facilities data, cleans the data, and creates a data frame with relevant covariate values. After step three, the raw facility data are stored in the `./data/` folder as `AMPD_Unit_with_Sulfur_Content_and_Regulations_with_Facility_Attributes.csv`. This section saves four output RDS files - `MonthlyUnitData.RDS`, `AnnualUnitData.RDS`, `MonthlyFacilityData.RDS`, and `AnnualFacilityData.RDS` - in the `./data/` folder. 
 
