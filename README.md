@@ -22,22 +22,29 @@ The following programming environments must be installed prior to running the co
 
 Before running any code, make sure the required R packages and programming environments (nimble and stan) have been installed.  Set the R working directory to the location of this README file.
 
-
-
 ### Step One - Data Generation:  
 - File `/run/1_generateSamples.R`
-- Generates spatial observations of varying types - Gaussian, binary, count, oridinal, and counts with spatially-varying coefficients. The underlying spatial latent field is assumed to be a Gaussian Process with a zero-valued mean function and a covariance function from the Mat'\ern class. 
+- Generates spatial observations of varying types - Gaussian, binary, count, ordinal, and counts with spatially-varying coefficients. The underlying spatial latent field is assumed to be a Gaussian Process with a zero-valued mean function and a covariance function from the Mat'\ern class. 
 - User is able to adjust the sample sizes, model parameters, and observed/validation locations
 - All samples are are saved in `/samples/SpatialData.RData`
 
 ### Step Two - Mesh Construction and Moran's Basis Functions: 
 - File `/run/2_setupPICAR.R`
 - Creates the mesh, Moran's eigenvector basis functions, and the projector matrices for the observed and validation locations. 
+- This step corresponds to section 3.1 of Lee and Haran (2021+). 
 - All components are saved in file `/samples/mesh.RData`
 
-### Step Three - 
-
-- Downloads the raw data sources used in the analysis. These data are publicly available, and have been archived (doi = 10.5281/zenodo.4072504) for reproducibility. These data require 1.7 GB of space.
+### Step Three - Automated Heuristic for Rank Selection:
+- File `3_automatedHeuristic.R`
+- Selects the appropriate rank of the Moran's eigenvector basis functions. Rank selection proceeds via the automated heuristic from Section 3,3 of Lee and Haran (2021+). 
+- Rank selection proceeds separately for each data type - Gaussian, binary, count, ordinal, and counts with spatially-varying coefficients.
+- The chosen rank and collection of basis functions are saved in:
+  + Gaussian Data: `/samples/Linear_Morans.RData`
+  + Binary Data: `/samples/Binary_Morans.RData`
+  + Count Data: `/samples/Count_Morans.RData`
+  + Count Data with Spatially-Varying Coefficients: `/samples/SVC_Morans.RData`
+  + Ordinal Data: `/samples/Ordinal_Morans.RData`
+- See code for modifications for ordinal data. 
 
 ### Step Four: 
 
