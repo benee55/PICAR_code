@@ -46,5 +46,12 @@ OrthSpace<-diag(Nnew)-(rep(1,Nnew)%*%t(rep(1,Nnew)))/Nnew
 MoransOperator<-OrthSpace%*%(WeightMat%*%OrthSpace)# Moran's Operator
 MoransOperatorEig<-eigen(MoransOperator) # Moran's Basis functions (i.e. Eigencomponents of the Moran's Operator)
 #######################################################
+# Plot first 16 Moran's Basis functions
+par(mfrow=c(4,4), mar=c(2,2,2,2))
+for(i in 1:16){
+  plotRF(dat=MoransOperatorEig$vectors[,i], location = mesh$loc, label = paste('Eigenvector #',i,sep=""))  
+}
+
+#######################################################
 # Save File
 save(mesh, AMat, AMatCV, MoransOperatorEig, file="../samples/mesh.RData")

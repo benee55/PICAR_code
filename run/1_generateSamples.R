@@ -1,6 +1,6 @@
 ################################################################################################
 #
-# Code to generate data: Gaussian, binary, count, and counts with spatially-varying coefficients
+# Code to generate data: Gaussian, binary, count, oridinal, and counts with spatially-varying coefficients
 #
 ################################################################################################
 library(fields) ; library(mvtnorm) ; library(classInt)
@@ -123,7 +123,7 @@ truthCVMSPESVC<-mean((pWCVSVC-obsCVBin)^2) # Poisson with spatially varying coef
 ################################################################################################
 # Plots
 ################################################################################################
-par(mfrow=c(2,3))
+par(mfrow=c(2,3), mar=c(2,2,2,2))
 plotRF(dat=obsFullLinear, location = comboLocation , label="Linear Observations")
 plotRF(dat=obsFullPois, location = comboLocation , label="Count Observations")
 plot(x=comboLocation[,1], y=comboLocation[,2], col = obsFullBin+1 , pch=16 , main="Binary Observations")

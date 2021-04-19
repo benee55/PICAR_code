@@ -6,7 +6,7 @@
 library(mvtnorm);library(fields); library(classInt)
 ################################################################
 # Load source file for MCMC diagnosis
-source("~/Dropbox/PICAR/Code/FINISHED/source/batchmeans.R")
+source("../source/batchmeans.R")
 ################################################################
 # Highest Posterior Density Interval
 ## Using Ming-Hui Chen's paper in Journal of Computational and Graphical Stats.
