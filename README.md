@@ -30,12 +30,16 @@ Before running any code, make sure the required R packages and programming envir
 - Helper functions saved in:
   + `/source/bathmeans.R` 
   + `/source/helperFunctions.R`
+<img src="/samples/data.png" width="700">
 
 ### Step Two - Mesh Construction and Moran's Basis Functions: 
 - File `/run/2_setupPICAR.R`
 - Creates the mesh, Moran's eigenvector basis functions, and the projector matrices for the observed and validation locations. 
 - This step corresponds to section 3.1 of Lee and Haran (2021+). 
 - All components are saved in file `/samples/mesh.RData`
+<img src="/samples/mesh.png" width="700">
+<img src="/samples/eigenvectors.png" width="700">
+
 
 ### Step Three - Automated Heuristic for Rank Selection:
 - File `3_automatedHeuristic.R`
