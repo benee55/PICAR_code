@@ -28,13 +28,14 @@ Before running any code, make sure the required R packages and programming envir
 - File `/run/1_generateSamples.R`
 - Generates spatial observations of varying types - Gaussian, binary, count, oridinal, and counts with spatially-varying coefficients. The underlying spatial latent field is assumed to be a Gaussian Process with a zero-valued mean function and a covariance function from the Mat'\ern class. 
 - User is able to adjust the sample sizes, model parameters, and observed/validation locations
-- Samples are saved in 
+- All samples are are saved in `/samples/SpatialData.RData`
 
 ### Step Two - Mesh Construction and Moran's Basis Functions: 
-- File `
-- Creates `./data/` and `./output/` subdirectories, which will hold the underlying data sources and analysis output, respectively.
+- File `/run/2_setupPICAR.R`
+- Creates the mesh, Moran's eigenvector basis functions, and the projector matrices for the observed and validation locations. 
+- All components are saved in file `/samples/mesh.RData`
 
-### Step Three:
+### Step Three - 
 
 - Downloads the raw data sources used in the analysis. These data are publicly available, and have been archived (doi = 10.5281/zenodo.4072504) for reproducibility. These data require 1.7 GB of space.
 
