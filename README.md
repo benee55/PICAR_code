@@ -24,7 +24,7 @@ Before running any code, make sure the required R packages and programming envir
 
 ### Step One - Data Generation:  
 - File `/run/1_generateSamples.R`
-- Generates spatial observations of varying types - Gaussian, binary, count, ordinal, and counts with spatially-varying coefficients. The underlying spatial latent field is assumed to be a Gaussian Process with a zero-valued mean function and a covariance function from the Mat'\ern class. 
+- Generates spatial observations of varying types - Gaussian, binary, count, ordinal, and counts with spatially-varying coefficients. The underlying spatial latent field is assumed to be a Gaussian Process with a zero-valued mean function and a covariance function from the Matern class. 
 - User is able to adjust the sample sizes, model parameters, and observed/validation locations
 - All samples are are saved in `/samples/SpatialData.RData`
 - Helper functions saved in:
