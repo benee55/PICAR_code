@@ -27,6 +27,9 @@ Before running any code, make sure the required R packages and programming envir
 - Generates spatial observations of varying types - Gaussian, binary, count, ordinal, and counts with spatially-varying coefficients. The underlying spatial latent field is assumed to be a Gaussian Process with a zero-valued mean function and a covariance function from the Mat'\ern class. 
 - User is able to adjust the sample sizes, model parameters, and observed/validation locations
 - All samples are are saved in `/samples/SpatialData.RData`
+- Helper functions saved in:
+  + `/source/bathmeans.R` 
+  + `/source/helperFunctions.R`
 
 ### Step Two - Mesh Construction and Moran's Basis Functions: 
 - File `/run/2_setupPICAR.R`
@@ -46,35 +49,47 @@ Before running any code, make sure the required R packages and programming envir
   + Ordinal Data: `/samples/Ordinal_Morans.RData`
 - See code for modifications for ordinal data. 
 
-### Step Four - PICAR-based Model Fitting via MCMC:
+### Step Four - PICAR-based Model Fitting via Markov Chain Monte Carlo (MCMC):
 
-#### Implementation A - nimble:
+#### A. Implementation using nimble:
+- Fits the PICAR-based model by drawing samples from the posterior distribution via MCMC. MCMC algorithm runs through nimble. 
+- Default setting runs 10k iterations of the MCMC algorithm. 
+- Provides summaries of the posterior samples (posterior mean, 95% credible intervals, acceptance rate, BMSE, number of effective samples, and effective samples per second). 
+- Produces trace plots for the regression coefficients and mean-squared prediction errors for the validation sample
+- Nimble source code saved as: `/source/nimbleSource.R`
+- Code to run MCMC algorithms and the subsequent analyses are provided in:
+  + Gaussian Data: `/run/nimble/4_runLinearPICAR.R`
+  + Binary Data: `/run/nimble/4_runBinaryPICAR.R`
+  + Count Data: `/run/nimble/4_runCountPICAR.R`
+  + Count Data with Spatially-Varying Coefficients: `/run/nimble/4_runSVCPICAR.R`
+  + Ordinal Data: `/run/nimble/4_runOrdinalPICAR.R`
+- Output from model fitting and data analysis:
+  + Gaussian Data: `/run/nimble/binaryPICAR.RData`
+  + Binary Data: `/run/nimble/binaryPICAR.RData`
+  + Count Data: `/run/nimble/countPICAR.RData`
+  + Count Data with Spatially-Varying Coefficients: `/run/nimble/svcPICAR.RData`
+  + Ordinal Data: `/run/nimble/ordinalPICAR.RData`
 
-#### Implementation B - stan:
+#### B. Implementation using stan:
+- Similar to the nimble implemenation. However, the MCMC algorithm runs through stan. 
+- Provides summaries of the posterior samples (posterior mean, 95% credible intervals, acceptance rate, BMSE, number of effective samples, and effective samples per second). 
+- Produces trace plots for the regression coefficients and mean-squared prediction errors for the validation sample
+- Stan source code saved in:
+  + Gaussian Data: `/run/stan/linear_PICAR.stan`
+  + Binary Data: `/run/stan/binary_PICAR.stan`
+  + Count Data: `/run/stan/count_PICAR.stan`
+  + Count Data with Spatially-Varying Coefficients: `/run/stan/svc_PICAR.stan`
+  + Ordinal Data: `/run/stan/ordinal_PICAR.stan`
+- Code to run MCMC algorithms and the subsequent analyses are provided in:
+  + Gaussian Data: `/run/stan/4_runLinearPICAR_stan.R`
+  + Binary Data: `/run/stan/4_runBinaryPICAR_stan.R`
+  + Count Data: `/run/stan/4_runCountPICAR_stan.R`
+  + Count Data with Spatially-Varying Coefficients: `/run/stan/4_runSVCPICAR_stan.R`
+  + Ordinal Data: `/run/stan/4_runOrdinalPICAR_stan.R`
+- Output from model fitting and data analysis:
+   + Gaussian Data: `/run/stan/binaryPICAR.RData`
+  + Binary Data: `/run/stan/binaryPICAR.RData`
+  + Count Data: `/run/stan/countPICAR.RData`
+  + Count Data with Spatially-Varying Coefficients: `/run/stan/svcPICAR.RData`
+  + Ordinal Data: `/run/stan/ordinalPICAR.RData`
 
-- Adds all functions from the script, `functions.R`, found in the `./src/` folder.
-
-### Step Four - PICAR-based Model Fitting via MCMC: 
-
-- Loads the raw coal-fired power plant facilities data, cleans the data, and creates a data frame with relevant covariate values. After step three, the raw facility data are stored in the `./data/` folder as `AMPD_Unit_with_Sulfur_Content_and_Regulations_with_Facility_Attributes.csv`. This section saves four output RDS files - `MonthlyUnitData.RDS`, `AnnualUnitData.RDS`, `MonthlyFacilityData.RDS`, and `AnnualFacilityData.RDS` - in the `./data/` folder. 
-
-### Step Six: 
-
-- Cleans all data (including environmental covariates, the SO4 response variable, and facilities data), and stores them as a single raster. This raster object is saved as `./data/central-usa-data.RDS`. This raster contains all data needed for the remaining analysis. The relevant raw data sources can be found in the subfolder, `./data/`, created in Step Two.
-
-### Step Seven: 
-
-- Generates posterior draws (via MCMC) from the 4 models considered in the manuscript. The samples are stored as RDS files in `./output/`. **CAUTION: THIS WILL TAKE A VERY LONG TIME**. If possible, it is recommended that the individual steps 2-5 found in `./src/so4-mcmc.R` be completed in parallel, if possible.
-
-### Step Eight:  
-
-- Summarizes the posterior draws with Figures, Tables, and results found in Section 4 of the manuscript. The figures will be saved as PNG files in `./output/`. **CAUTION: THIS MAY TAKE UP TO 5 HOURS** (due to the creation of Figure 4c).
-
-### Step Nine:
-
-- Generates the three plots found within `supp-materials.pdf`. These are saved as PNGs in `./output/`.
-
-
-## Output
-
-Upon successful completion of `main.R`, the results are saved as PNGs in the `./output/` folder. Example format includes `./output/fig1a.png`, etc. These figures will look very similar, if not identical, to those found in the manuscript. Differences can be explained by small changes induced by random draws from the posterior. However, all results should be qualitatively the same.
